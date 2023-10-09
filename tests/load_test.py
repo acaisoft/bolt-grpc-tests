@@ -9,7 +9,7 @@ current_directory = Path(os.path.dirname(os.path.abspath(__file__))).parent.abso
 proto_directory = os.path.join(current_directory, 'pb')
 sys.path.append(proto_directory)
 
-from pb import api_pb2_grpc, api_pb2
+import api_pb2_grpc, api_pb2
 
 
 class ApiGrpcUser(grpc_user.GrpcUser):

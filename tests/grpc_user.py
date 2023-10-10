@@ -47,15 +47,9 @@ class LocustInterceptor(ClientInterceptor):
 class GrpcUser(User):
     abstract = True
     stub_class = None
-    target_host = None
-    port = None
 
     def __init__(self, environment):
         super().__init__(environment)
-        if self.target_host.scheme == "":
-            self.host = f"{self.target_host.path}:{self.port}"
-        else:
-            self.host = f"{self.target_host.netloc}:{self.port}"
         for attr_value, attr_name in ((self.host, "host"), (self.stub_class, "stub_class")):
             if attr_value is None:
                 raise LocustError(f"You must specify the {attr_name}.")

@@ -10,3 +10,11 @@ class ApiGrpcUser(grpc_user.GrpcUser):
     @task
     def TriggerCounter(self):
         self.stub.TriggerCounter(api_pb2.ApiRequest(value=None))
+
+    @task
+    def GetCounter(self):
+        self.stub.GetCounter(api_pb2.ApiRequest(value=None))
+
+    @task
+    def ResetCounter(self):
+        self.stub.ResetCounter(api_pb2.ApiRequest(value=None))

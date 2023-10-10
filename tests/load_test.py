@@ -12,5 +12,5 @@ class ApiGrpcUser(grpc_user.GrpcUser):
     stub_class = api_pb2_grpc.ApiStub
 
     @task
-    def setValue(self):
-        self.stub.SetValue(api_pb2.ApiRequest(value="Test"))
+    def TriggerCounter(self):
+        self.stub.TriggerCounter(api_pb2.ApiRequest(value=None))

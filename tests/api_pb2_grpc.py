@@ -14,13 +14,18 @@ class ApiStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.SetValue = channel.unary_unary(
-                '/Api/SetValue',
+        self.TriggerCounter = channel.unary_unary(
+                '/Api/TriggerCounter',
                 request_serializer=api__pb2.ApiRequest.SerializeToString,
-                response_deserializer=api__pb2.ApiReply.FromString,
+                response_deserializer=api__pb2.CounterReply.FromString,
                 )
-        self.GetValue = channel.unary_unary(
-                '/Api/GetValue',
+        self.GetCounter = channel.unary_unary(
+                '/Api/GetCounter',
+                request_serializer=api__pb2.ApiRequest.SerializeToString,
+                response_deserializer=api__pb2.CounterReply.FromString,
+                )
+        self.ResetCounter = channel.unary_unary(
+                '/Api/ResetCounter',
                 request_serializer=api__pb2.ApiRequest.SerializeToString,
                 response_deserializer=api__pb2.ApiReply.FromString,
                 )
@@ -29,13 +34,19 @@ class ApiStub(object):
 class ApiServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def SetValue(self, request, context):
+    def TriggerCounter(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetValue(self, request, context):
+    def GetCounter(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ResetCounter(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -44,13 +55,18 @@ class ApiServicer(object):
 
 def add_ApiServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'SetValue': grpc.unary_unary_rpc_method_handler(
-                    servicer.SetValue,
+            'TriggerCounter': grpc.unary_unary_rpc_method_handler(
+                    servicer.TriggerCounter,
                     request_deserializer=api__pb2.ApiRequest.FromString,
-                    response_serializer=api__pb2.ApiReply.SerializeToString,
+                    response_serializer=api__pb2.CounterReply.SerializeToString,
             ),
-            'GetValue': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetValue,
+            'GetCounter': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetCounter,
+                    request_deserializer=api__pb2.ApiRequest.FromString,
+                    response_serializer=api__pb2.CounterReply.SerializeToString,
+            ),
+            'ResetCounter': grpc.unary_unary_rpc_method_handler(
+                    servicer.ResetCounter,
                     request_deserializer=api__pb2.ApiRequest.FromString,
                     response_serializer=api__pb2.ApiReply.SerializeToString,
             ),
@@ -65,7 +81,7 @@ class Api(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def SetValue(request,
+    def TriggerCounter(request,
             target,
             options=(),
             channel_credentials=None,
@@ -75,14 +91,14 @@ class Api(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/Api/SetValue',
+        return grpc.experimental.unary_unary(request, target, '/Api/TriggerCounter',
             api__pb2.ApiRequest.SerializeToString,
-            api__pb2.ApiReply.FromString,
+            api__pb2.CounterReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def GetValue(request,
+    def GetCounter(request,
             target,
             options=(),
             channel_credentials=None,
@@ -92,7 +108,24 @@ class Api(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/Api/GetValue',
+        return grpc.experimental.unary_unary(request, target, '/Api/GetCounter',
+            api__pb2.ApiRequest.SerializeToString,
+            api__pb2.CounterReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ResetCounter(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/Api/ResetCounter',
             api__pb2.ApiRequest.SerializeToString,
             api__pb2.ApiReply.FromString,
             options, channel_credentials,

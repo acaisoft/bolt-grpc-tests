@@ -1,3 +1,5 @@
+FROM prom/node-exporter as NE
+
 FROM golang:1.19
 
 WORKDIR /docker-grpc
@@ -21,6 +23,16 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o /grpc-api
 # the application is going to listen on by default.
 # https://docs.docker.com/engine/reference/builder/#expose
 EXPOSE 50051
+EXPOSE 8081
+EXPOSE 9100
+
+# node_exporter
+COPY --from=NE /bin/node_exporter /bin/node_exporter
+
+# entrypoint
+COPY scaffold.sh /
+
+RUN chmod +x /scaffold.sh
 
 # Run
-CMD [ "/grpc-api" ]
+CMD ["/scaffold.sh"]

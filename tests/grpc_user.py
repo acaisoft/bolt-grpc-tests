@@ -35,6 +35,8 @@ class LocustInterceptor(ClientInterceptor):
         self.env.events.request.fire(
             request_type="grpc",
             name=call_details.method,
+            start_time=start_perf_counter,
+            url=call_details.method,
             response_time=(time.perf_counter() - start_perf_counter) * 1000,
             response_length=response_length,
             response=response,

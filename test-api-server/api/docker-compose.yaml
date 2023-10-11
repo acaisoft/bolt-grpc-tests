@@ -1,0 +1,11 @@
+# docker-compose for instantiating the go-example service
+version: '3.7'
+services:
+  go-example:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: go-example
+    container_name: go-example
+    ports:
+      - 50051:50051

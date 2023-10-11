@@ -60,4 +60,10 @@ class GrpcUser(User):
 
         self.stub = self.stub_class(self._channel)
 
+    def stop(self, force=False):
+        self._channel_closed = True
+        time.sleep(1)
+        self._channel.close()
+        super().stop(force=True)
+
    
